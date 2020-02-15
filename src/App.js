@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/Header";
+import { AuthProvider } from "./Auth";
+import PrivateRoute from "./constants/PrivateRoute";
+import Login from "./pages/Login";
+import SignUp from "./pages/Signup";
+import Jobtracker from "./pages/Jobtracker";
+import Add from "./pages/Add";
+import Edit from "./pages/Edit";
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <AuthProvider>
+        <Router>
+          <PrivateRoute exact path="/" component={Jobtracker} />
+          <PrivateRoute exact path="/add" component={Add} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={SignUp} />
+
+          <Route
+            path="/jobs/:jobId"
+            render={props => (
+              <Edit {...props} jobId={props.match.params.jobId} />
+            )}
+          />
+        </Router>
+      </AuthProvider>
+    </>
   );
 }
 
