@@ -7,6 +7,8 @@ import SignUp from "./pages/Signup";
 import Jobtracker from "./pages/Jobtracker";
 import Add from "./pages/Add";
 import Edit from "./pages/Edit";
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -16,6 +18,7 @@ function App() {
       <Header />
       <AuthProvider>
         <Router>
+          <CssBaseline />
           <PrivateRoute exact path="/" component={Jobtracker} />
           <PrivateRoute exact path="/add" component={Add} />
           <Route exact path="/login" component={Login} />

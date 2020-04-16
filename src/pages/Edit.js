@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import * as firebase from "firebase";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import "firebase/firestore";
+import ActivityIndicator from '../components/ActivityIndicator'
 
 import Typography from "@material-ui/core/Typography";
 
@@ -35,6 +36,7 @@ export default function AddJob(props) {
   const classes = useStyles();
   const [job, setJob] = useState([]);
   const [stage, setStage] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const inputLabel = React.useRef(null);
 
@@ -46,7 +48,7 @@ export default function AddJob(props) {
   };
 
   useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth);
+    
     let user = localStorage.getItem("user");
 
     if (user) {
@@ -66,6 +68,8 @@ export default function AddJob(props) {
             console.log(data);
             setJob(data);
             setStage(data.Stage);
+            setLoading(false);
+            setLabelWidth(inputLabel.current.offsetWidth);
             return data;
           }
         })
@@ -107,6 +111,10 @@ export default function AddJob(props) {
   const goBack = () => {
     props.history.push("/");
   };
+
+  if (loading) {
+    return <ActivityIndicator />
+  }
 
   return (
     <>
